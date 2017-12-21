@@ -1,0 +1,45 @@
+global:
+  scrape_interval:     10s
+
+  external_labels:
+    monitor: 'docker-test'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 3s
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          group: 'prometheus'
+
+  - job_name: 'proxy'
+    scrape_interval: 3s
+    static_configs:
+      - targets: ['docker.sudothought.com:8082']
+        labels:
+          group: 'proxy'
+
+  - job_name: 'agent1'
+    scrape_interval: 3s
+    metrics_path: '/agent1_metrics'
+    static_configs:
+      - targets: ['docker.sudothought.com:8080']
+        labels:
+          group: 'agents'
+
+  - job_name: 'agent2'
+    scrape_interval: 3s
+    metrics_path: '/agent2_metrics'
+    static_configs:
+      - targets: ['docker.sudothought.com:8080']
+        labels:
+          group: 'agents'
+
+  - job_name: 'OSX-Docker'
+    scrape_interval: 3s
+    metrics_path: '/docker_metrics'
+    static_configs:
+      - targets: ['docker.sudothought.com:8080']
+        labels:
+          group: 'docker'
+
